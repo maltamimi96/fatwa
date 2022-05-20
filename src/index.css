@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+main {
+  /* Ensure the remaining content doesn't hide behind the #navbar: */
+  position: absolute;
+  z-index: 1;
+  top: 100px;
+}
+nav{
+  position:static;
+  margin-bottom: 30px;
+}
