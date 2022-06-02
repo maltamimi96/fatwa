@@ -1,11 +1,14 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from "../context/AuthProvider";
+import {Navigate,} from 'react-router-dom';
+
+  
 
 import axios from '../api/axios';
 const LOGIN_URL = 'auth/sign_in';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+    const {auth, setAuth } = useContext(AuthContext);
     const emailRef = useRef();
     const errRef = useRef();
 
@@ -22,6 +25,7 @@ const Login = () => {
         setErrMsg('');
     }, [email, password])
 
+    //Sign-in Function
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -35,8 +39,11 @@ const Login = () => {
             );
             console.log(JSON.stringify(response?.data));
             //console.log(JSON.stringify(response));
-            const accessToken = response?.data?.accessToken;
-            setAuth({ email, password, accessToken });
+            const jwt = response?.data?.jwt;
+            const username =response?.data.username
+            setAuth({ email,username, jwt });//stores email,password and JWT token in a context 
+            console.log("JWT is:",auth.data.jwt)
+            console.log("JWT is:",auth.username)
             setEmail('');
             setPassword('');
             setSuccess(true);
@@ -52,18 +59,13 @@ const Login = () => {
             }
             errRef.current.focus();
         }
-    }
+    }                                      
 
     return (
         <>
             {success ? (
-                <section>
-                    <h1>You are logged in!</h1>
-                    <br />
-                    <p>
-                        <a href="#">Go to Home</a>
-                    </p>
-                </section>
+
+                    <Navigate replace to="/" />     
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
