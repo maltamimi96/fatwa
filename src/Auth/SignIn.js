@@ -71,10 +71,17 @@ const SignIn = ()=> {
         //console.log(JSON.stringify(response));
         const jwt = response?.data?.jwt;
         const username =response?.data.username
-        setAuth({ email,username, jwt });//stores email,password and JWT token in a context 
+        const user=response.data
         // setEmail('');
+        setAuth({jwt,username})
         // setPassword('');
-        localStorage.setItem('token', auth.jwt);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        // const user1=JSON.parse(localStorage.getItem('user'))
+        // console.log("user is",user1.jwt)
+        // console.log(auth.jwt)
+
+        
+        //stores email,password and JWT token in a context 
         setSuccess(true);
     } catch (err) {
         if (!err?.response) {
@@ -95,7 +102,9 @@ return (
   <>
   {success ? (
 
-          <Navigate replace to="/" />     
+          console.log(auth.jwt)
+          //  <Navigate replace to="/" /> 
+           
   ) : (
     
     <ThemeProvider theme={theme}>

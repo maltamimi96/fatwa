@@ -5,8 +5,7 @@ import QuestionForm from '../Components/QuestionForm';
 
 function Ask() {
   return (
-      
-   <QuestionForm/>
+<QuestionForm/>      
     )
 }
 

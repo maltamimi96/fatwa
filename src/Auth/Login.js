@@ -41,8 +41,10 @@ const Login = () => {
             //console.log(JSON.stringify(response));
             const jwt = response?.data?.jwt;
             const username =response?.data.username
-            setAuth({ email,username, jwt });//stores email,password and JWT token in a context 
-            console.log("JWT is:",auth.data.jwt)
+            setAuth({ e:"email",r:22, f:33 });
+            //stores email,password and JWT token in a context 
+            const t={email,username,jwt}
+            console.log("JWT is:",auth.e)
             console.log("JWT is:",auth.username)
             setEmail('');
             setPassword('');

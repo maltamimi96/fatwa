@@ -1,0 +1,33 @@
+
+{
+    "questions":
+    [
+        {
+            "id":1,
+            "title":"I am the 1 Question",
+            "body":"I am the 1 Body",
+            "category":"I am the 1 Category"
+
+        },
+        {
+            "id":2,
+            "title":"I am the 2 Question",
+            "body":"I am the 2 Body",
+            "category":"I am the 2 Category"
+
+        },
+        {
+            "id":3,
+            "title":"I am the 3 Question",
+            "body":"I am the 3 Body",
+            "category":"I am the 3 Category"
+        },
+        {
+            "id":4,
+            "title":"I am the 4 Question",
+            "body":"I am the 4 Body",
+            "category":"I am the 4 Category"
+        }
+    ]
+}
+
