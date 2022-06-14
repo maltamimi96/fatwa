@@ -12,22 +12,70 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from '../api/axios';
+import { useRef, useState, useEffect, useContext } from 'react';
+import AuthContext from "../context/AuthProvider";
+import {Navigate,} from 'react-router-dom';
+
+
+
 
 
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const LOGIN_URL = 'auth/sign_up';
+
+  const {auth, setAuth } = useContext(AuthContext);
+  const emailRef = useRef();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm_password, setConfirmPassword] = useState('');
+
+  const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+        const response = await axios.post(LOGIN_URL,
+            JSON.stringify({ username,email, password,confirm_password }),
+            {
+                headers: { 'Content-Type': 'application/json' },
+                
+            }
+        );
+        console.log(JSON.stringify(response?.data))
+
+        const jwt = response?.data?.jwt;
+        const username =response?.data.username
+        const user=response.data
+        setAuth({jwt,username})
+        //stores email,password and JWT token in a context 
+        setSuccess(true);
+    } catch (err) {
+        if (!err?.response) {
+            setErrMsg('No Server Response');
+        } else if (err.response?.status === 400) {
+            setErrMsg('Missing emailname or Password');
+        } else if (err.response?.status === 401) {
+            setErrMsg('Unauthorized');
+        } else {
+            setErrMsg('Login Failed');
+        }
+    }
+}
 
   return (
+
+
+    <>
+
+    {success?( <Navigate replace to="/" /> ):(
+
+
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -111,5 +159,7 @@ export default function SignUp() {
         </Box>
       </Container>
     </ThemeProvider>
+    )}
+    </>
   );
 }

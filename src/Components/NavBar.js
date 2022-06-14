@@ -17,8 +17,8 @@ function NavBar() {
         </div>
         <div className='auth--links'>
             <ul className='links--ul'>
-                    <Link to={"/sign-in"}><li className='link--li login'>Login</li></Link>
-                    <li className='link--li'>Sign-Up</li>
+                    <Link to={"/sign-in"}><li className='link--li'>Login</li></Link>
+                    <Link to={"/sign-up"}><li className='link--li'>Sign-Up</li></Link>
                 </ul>
         </div>
     </nav>

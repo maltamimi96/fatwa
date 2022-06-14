@@ -1,10 +1,10 @@
 import React from 'react'
-
 function ImportantTopics() {
   return (
     <section className='topic--section'>
         <div className='card--div aqeeda' >
             <h2>Aqeeda</h2>
+
         </div>
         <div className='card--div fiqh'>
             <h2>Fiqh</h2>

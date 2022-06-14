@@ -17,7 +17,7 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import axios from '../api/axios';
 import {Navigate,} from 'react-router-dom';
 
-const LOGIN_URL = 'auth/sign_in';
+const LOGIN_URL = 'auth/sign_up';
 
 
 
@@ -25,15 +25,21 @@ const LOGIN_URL = 'auth/sign_in';
 
 const theme = createTheme();
 
-const SignIn = ()=> {
+const Register = ()=> {
 
 
   const {auth, setAuth } = useContext(AuthContext);
+
   const emailRef = useRef();
+  const usernameRef = useRef();
+
   const errRef = useRef();
 
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [password_confirmation, setPasswordConfirmation] = useState('');
+
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -45,7 +51,7 @@ const SignIn = ()=> {
       setErrMsg('');
   }, [email, password])
 
-
+const user="pp"
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -61,24 +67,16 @@ const SignIn = ()=> {
 
     try {
         const response = await axios.post(LOGIN_URL,
-            JSON.stringify({ email, password }),
+            JSON.stringify({username,email, password,password_confirmation}),
             {
                 headers: { 'Content-Type': 'application/json' },
                 
             }
         );
         console.log(JSON.stringify(response?.data));
-        //console.log(JSON.stringify(response));
-        const jwt = response?.data?.jwt;
-        const username =response?.data.username
-        const user=response.data
-        // setEmail('');
-        setAuth({jwt,username})
-        // setPassword('');
-        localStorage.setItem('user', JSON.stringify(response.data));
-        // const user1=JSON.parse(localStorage.getItem('user'))
-        // console.log("user is",user1.jwt)
-        // console.log(auth.jwt)
+        // const jwt = response?.data?.jwt;
+        // const username =response?.data.username
+        // setAuth({jwt,username})
 
         
         //stores email,password and JWT token in a context 
@@ -125,9 +123,23 @@ return (
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
+
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="username"
+              name="username"
+              autoFocus
+              inputRef={usernameRef}
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+            />
+            
             <TextField
               margin="normal"
               required
@@ -153,6 +165,18 @@ return (
               autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password_confirmation"
+              label="Confirm Password"
+              type="password"
+              id="password_confirmation"
+              value={password_confirmation}
+              autoComplete="current-password"
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
+            />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -163,7 +187,7 @@ return (
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container>
               <Grid item xs>
@@ -188,4 +212,4 @@ return (
   );
 }
 
-export default SignIn
+export default Register
