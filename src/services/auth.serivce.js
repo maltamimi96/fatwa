@@ -9,6 +9,6 @@ export async function login (email,password)  {
         
     }
   )
-  return response.data
+  return response
 }
 

@@ -16,6 +16,7 @@ import AuthContext from "../context/AuthProvider";
 import { useRef, useState, useEffect, useContext } from 'react';
 import axios from '../api/axios';
 import {Navigate,} from 'react-router-dom';
+import { login } from '../services/auth.serivce';
 
 const LOGIN_URL = 'auth/sign_in';
 
@@ -28,7 +29,7 @@ const theme = createTheme();
 const SignIn = ()=> {
 
 
-  const { setAuth } = useContext(AuthContext);
+  const {auth, setAuth } = useContext(AuthContext);
   const emailRef = useRef();
   const errRef = useRef();
 
@@ -60,30 +61,25 @@ const SignIn = ()=> {
     e.preventDefault();
 
     try {
-        const response = await axios.post(LOGIN_URL,
-            JSON.stringify({ email, password }),
-            {
-                headers: { 'Content-Type': 'application/json' },
-                
-            }
-        );
-        console.log(JSON.stringify(response?.data));
-        //console.log(JSON.stringify(response));
+        const response = login(email,password)
+        response.then((response)=>{
+            console.log(JSON.stringify(response?.data));
         const jwt = response?.data?.jwt;
         const username =response?.data.username
         const user_id =response?.data.user_id
+        setAuth({jwt,username,user_id})
+        setSuccess(true);
+        })
+      
+
 
         // setEmail('');
-        setAuth({jwt,username,user_id})
         // setPassword('');
-        localStorage.setItem('user', JSON.stringify(response.data));
+        // localStorage.setItem('user', JSON.stringify(response.data));
         // const user1=JSON.parse(localStorage.getItem('user'))
         // console.log("user is",user1.jwt)
         // console.log(auth.jwt)
-
-        
         //stores email,password and JWT token in a context 
-        setSuccess(true);
     } catch (err) {
         if (!err?.response) {
             setErrMsg('No Server Response');

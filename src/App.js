@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import ApiTest from "./ApiTest";
 import Layout from "./Components/Layout";
 import SignIn from "./Auth/SignIn";
 import Register from "./Auth/Register";
