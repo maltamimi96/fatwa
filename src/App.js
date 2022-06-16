@@ -10,6 +10,7 @@ import Ask from "./pages/Ask";
 import AllArticles from "./Components/AllArticles";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
+import MyProfile from "./pages/MyProfile";
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
       <Route path="/sign-up" element={<Register/>}/>
       <Route path="/sign-in" element={<SignIn/>}/>
       <Route path="/ask" element={<Ask/>}/>
-      <Route path="/api" element={<ApiTest/>}/>
+      <Route path="/my-profile" element={<MyProfile/>}/>
     </Routes>
 </Layout>
 <Footer/>

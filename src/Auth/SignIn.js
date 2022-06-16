@@ -28,7 +28,7 @@ const theme = createTheme();
 const SignIn = ()=> {
 
 
-  const {auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
   const emailRef = useRef();
   const errRef = useRef();
 
@@ -71,9 +71,10 @@ const SignIn = ()=> {
         //console.log(JSON.stringify(response));
         const jwt = response?.data?.jwt;
         const username =response?.data.username
-        const user=response.data
+        const user_id =response?.data.user_id
+
         // setEmail('');
-        setAuth({jwt,username})
+        setAuth({jwt,username,user_id})
         // setPassword('');
         localStorage.setItem('user', JSON.stringify(response.data));
         // const user1=JSON.parse(localStorage.getItem('user'))
