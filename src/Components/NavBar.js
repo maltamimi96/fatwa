@@ -16,7 +16,7 @@ function NavBar() {
                 <li className='link--li'>About</li>
                 <li className='link--li'>Topics</li>
                 <li className='link--li'>Mazhab</li>
-                <li className='link--li'>Explore</li>
+                <Link to={"/articles"}><li className='link--li'>Explore</li></Link>
             </ul>
         </div>
         <div className='auth--links'>
