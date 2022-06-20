@@ -1,6 +1,6 @@
 
 import AuthContext from "../context/AuthProvider";
-import { useRef, useState, useEffect, useContext,useReducer } from 'react';
+import { useRef, useState,useContext,useReducer } from 'react';
 import { createQuestion } from "../services/question.service";
 
 

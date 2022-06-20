@@ -46,9 +46,9 @@ export async function updateQuestion(id){
 }
         
     
-export async function deleteQuestion(id,data){
+export async function deleteQuestion(id){
     const QUESTION_URL = `questions/delete/${id}`
-    const response = await API.delete(QUESTION_URL,data, 
+    const response = await API.delete(QUESTION_URL,
         {
             headers: { 
                         'Content-Type': 'application/json'

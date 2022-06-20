@@ -24,7 +24,7 @@ function Question() {
         },[])
 
     function deleteQ(){
-        const response = deleteQuestion(URL_PARAM.id,question)
+        const response = deleteQuestion(URL_PARAM.id)
         response.then((response)=>{  console.log(response)})
         .catch((err)=>{console.log(err)})
           
