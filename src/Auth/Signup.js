@@ -1,22 +1,21 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useRef, useState, useEffect, useContext ,useReducer} from 'react';
-import AuthContext from "../context/AuthProvider";
-import {Navigate,} from 'react-router-dom';
-import { sign_up } from '../services/auth.serivce';
+
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useRef, useState, useEffect, useContext ,useReducer} from 'react'
+import AuthContext from "../context/AuthProvider"
+import {Navigate,} from 'react-router-dom'
+import { sign_up } from '../services/auth.serivce'
 
 
-const theme = createTheme();
+const theme = createTheme()
 const initialState={
   username:'',
   email:'',
@@ -40,17 +39,11 @@ function reducer(state,action){
 }
 export default function SignUp() {
   const [state,dispatch]= useReducer(reducer,initialState)
-  const {setAuth } = useContext(AuthContext);
-  const emailRef = useRef();
+  const {setAuth } = useContext(AuthContext)
+  const emailRef = useRef()
   const errRef = useRef()
-
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm_password, setConfirmPassword] = useState('');
-
-  const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [errMsg, setErrMsg] = useState('')
+  const [success, setSuccess] = useState(false)
   useEffect(() => {
     emailRef.current.focus()
 }, [])
@@ -60,7 +53,7 @@ useEffect(() => {
 }, [state.email, state.password])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
   
         const response = sign_up(state.username,state.email,state.password,state.confirm_password)
@@ -186,5 +179,5 @@ useEffect(() => {
     </ThemeProvider>
     )}
     </>
-  );
+  )
 }

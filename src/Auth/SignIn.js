@@ -1,4 +1,3 @@
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
@@ -60,8 +59,11 @@ useEffect(() => {
         response.then((response)=>{
         const jwt = response?.data?.jwt
         const username =response?.data.username
-        const user_id =response?.data.user_id
+        const user_id =response?.data.id
+        console.log(response)
         setAuth({jwt,username,user_id})
+        sessionStorage.setItem("token",jwt)
+        sessionStorage.setItem("user",username)
         setSuccess(true)
         }).catch ((err)=>{ if (!err?.response) {
             setErrMsg('No Server Response')
@@ -84,7 +86,6 @@ return (
   {success ? (
 
           <Navigate replace to="/" /> 
-           
   ) : (
     
     <ThemeProvider theme={theme}>

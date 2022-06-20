@@ -14,14 +14,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AuthContext from "../context/AuthProvider";
 import { useRef, useState, useEffect, useContext } from 'react';
-import axios from '../api/axios';
+import API from '../api/axios';
 import {Navigate,} from 'react-router-dom';
 
 const LOGIN_URL = 'auth/sign_up';
-
-
-
-
 
 const theme = createTheme();
 
@@ -32,14 +28,11 @@ const Register = ()=> {
 
   const emailRef = useRef();
   const usernameRef = useRef();
-
   const errRef = useRef();
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password_confirmation, setPasswordConfirmation] = useState('');
-
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -51,35 +44,24 @@ const Register = ()=> {
       setErrMsg('');
   }, [email, password])
 
-const user="pp"
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-        const response = await axios.post(LOGIN_URL,
+        const response = await API.post(LOGIN_URL,
             JSON.stringify({username,email, password,password_confirmation}),
             {
                 headers: { 'Content-Type': 'application/json' },
-                
             }
         );
-        console.log(JSON.stringify(response?.data));
-        // const jwt = response?.data?.jwt;
-        // const username =response?.data.username
-        // setAuth({jwt,username})
-
+        const jwt = response?.data?.jwt
+        const username =response?.data.username
+        const user_id =response?.data.id
+        console.log(response)
+        setAuth({jwt,username,user_id})
         
-        //stores email,password and JWT token in a context 
         setSuccess(true);
     } catch (err) {
         if (!err?.response) {

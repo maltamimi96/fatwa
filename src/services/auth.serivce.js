@@ -1,8 +1,12 @@
-import axios from "../api/axios";
+import API from "../api/axios";
+const URL = 
+{
+  LOGIN:'auth/sign_in',
+  SIGNUP:'auth/sign_up'
 
-const LOGIN_URL = 'auth/sign_in';
+}
 export async function login (email,password)  {
-  const response = await axios.post(LOGIN_URL,
+  const response = await API.post(URL.LOGIN,
     JSON.stringify({email,password}),
     {
         headers: { 'Content-Type': 'application/json' },
@@ -13,7 +17,7 @@ export async function login (email,password)  {
 }
 
 export async function sign_up (username,email,password,con_pass)  {
-  const response = await axios.post(LOGIN_URL,
+  const response = await API.post(URL.SIGNUP,
     JSON.stringify({username,email,password,con_pass}),
     {
         headers: { 'Content-Type': 'application/json' },
@@ -23,3 +27,9 @@ export async function sign_up (username,email,password,con_pass)  {
   return response
 }
 
+
+
+
+export async function logout ()  {
+  sessionStorage.clear()
+}

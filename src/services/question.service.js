@@ -1,14 +1,10 @@
 //crud
-import axios from "../api/axios";
-
-
-
-
+import API from "../api/axios";
 
 export async function getAll(){
     const ALL_QUESTIONS_URL = 'questions/all'
 
-    const response = await axios.get(ALL_QUESTIONS_URL, 
+    const response = await API.get(ALL_QUESTIONS_URL, 
     {
         headers: { 'Content-Type': 'application/json' },
     }
@@ -16,12 +12,52 @@ export async function getAll(){
     return response.data
 }
 
-export async function getQuestion(id){
-const QUESTION_URL = `/question/${id}`
-const response = await axios.get(QUESTION_URL, 
-    {
-        headers: { 'Content-Type': 'application/json' },
+
+export async function createQuestion(user_id,category_id,title,body){
+    const QUESTION_URL = `questions/ask`
+    const data={user_id,category_id,title,body}
+    const response = await API.post(QUESTION_URL,data,
+        {
+            headers: { 'Content-Type': 'application/json'},
+        }
+        )
+        return response.data
     }
-    )
-    return response.data
+
+export async function getQuestion(id){
+        const QUESTION_URL = `questions/question/${id}`
+        const response = await API.get(QUESTION_URL, 
+            {
+                headers: { 'Content-Type': 'application/json' },
+            }
+            )
+            return response.data
 }
+
+export async function updateQuestion(id){
+        const QUESTION_URL = `questions/question/${id}`
+        const response = await API.get(QUESTION_URL, 
+            {
+                headers: { 'Content-Type': 'application/json', 
+            },
+            }
+            )
+            return response.data
+}
+        
+    
+export async function deleteQuestion(id,data){
+    const QUESTION_URL = `questions/delete/${id}`
+    const response = await API.delete(QUESTION_URL,data, 
+        {
+            headers: { 
+                        'Content-Type': 'application/json'
+                     }
+        }
+        )
+        return response.data
+    }
+
+
+    
+

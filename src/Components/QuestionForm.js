@@ -1,49 +1,92 @@
 
 import AuthContext from "../context/AuthProvider";
-import { useRef, useState, useEffect, useContext } from 'react';
-import axios from '../api/axios';
+import { useRef, useState, useEffect, useContext,useReducer } from 'react';
+import { createQuestion } from "../services/question.service";
+
+
+const initialState={
+  title:'',
+  body:'',
+  category:'',
+}
+
+function reducer(state,action){
+  switch (action.type){
+    case 'setTitle':
+      return {...state,title:action.payload}  
+    case 'setBody':
+      return {...state,body:action.payload}
+    case 'setCategory':
+        return {...state,category:action.payload}  
+    default:
+      throw new Error()    
+  }
+}
 
 
 function QuestionForm() {
-const [title,setTitle]=useState("")
+
+const [state,dispatch]= useReducer(reducer,initialState)
+
 const {auth } = useContext(AuthContext);
-const LOGIN_URL = 'questions/ask';
 const errRef = useRef();
 const [errMsg, setErrMsg] = useState('');
 const [success, setSuccess] = useState(false);
-const postObj={user_id:2,
-  category_id:1,
-  title:"From React",
-  body:"From React Account with eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTQ4Njk3NzMsInN1YiI6Mn0.BRVHKJnBI_Y3F_HbECZMxhrhE8_ek8nbKfiEOvjzYg8"
-  }
+
+const handleSubmit = async (e) => {
+  e.preventDefault()
 
 
-// useEffect(()=>{
-//     console.log(auth.jwt)
-//     const response =axios.post(LOGIN_URL,postObj
-//         ,
-//         {
-//             headers:{
-//             'Content-Type': 'application/json' ,
-//             'Authorization': "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTQ4Njk3NzMsInN1YiI6Mn0.BRVHKJnBI_Y3F_HbECZMxhrhE8_ek8nbKfiEOvjzYg8"
-            
-//             }
-//         }
-//     )
-
-//   },[])
-
-// 
+      const response = createQuestion(auth.user_id,state.category,state.title,state.body)
+      response.then((response)=>{
+        setSuccess(true)
+        }).catch ((err)=>{ if (!err?.response) {
+            setErrMsg('No Server Response')
+        } else if (err.response?.status === 400) {
+            setErrMsg('Wrong  emailname or Password')
+        } else if (err.response?.status === 401) {
+            setErrMsg('Unauthorized')
+        } else {
+            setErrMsg('Login Failed')
+        }
+        }) 
+       
+}
   return (
     <div className='form-container'>
-      <form>
+      <form onSubmit={handleSubmit}>
+          <div className='form--input'>
+            <label htmlFor='title'>Title</label>
+            <input 
+            onChange={(e) => dispatch({type:"setTitle",payload:e.target.value})}
+            name="title"
+            type="text" 
+            required
+            >
+            </input>
+          
+          </div>
         <div className='form--input'>
-        <label htmlFor='title'>Title</label>
-        <input></input>
+          <label htmlFor='title'>Body</label>
+          <textarea 
+          name="body"
+          cols="100" 
+          rows="10"
+          onChange={(e) => dispatch({type:"setBody",payload:e.target.value})}
+          >
+          </textarea>
+        <div className='form--input'>
+        <label htmlFor='title'>Category</label>
+        <input 
+        name="category"
+        onChange={(e) => dispatch({type:"setCategory",payload:e.target.value})}
+
+        type="number" 
+        required
+        >
+        </input>
+        
         </div>
-        <div className='form--input'>
-        <label htmlFor='title'>Body</label>
-        <textarea name="" id="" cols="100" rows="10"></textarea>
         </div>
         <button>Submit Question</button>
       </form>
@@ -52,36 +95,3 @@ const postObj={user_id:2,
 }
 
 export default QuestionForm
-
-{/* <Grid container> 
-<form autoComplete='off'>
-    <Grid item xs={12}>
-      <TextField 
-          label="Title"
-          variant="outlined"
-          color="secondary"
-          required 
-      />
-    </Grid>
-    <Grid item >
-      <TextField
-          label="Body"
-          variant="outlined"
-          color="secondary"
-          required     
-          multiline
-          rows={6} 
-      />
-  </Grid>
-  <Grid item>
-    <Button 
-        variant="contained" 
-        endIcon={<SendIcon />}
-        color="secondary"
-        type='submit'
-    >
-      Submit Question
-  </Button>
-</Grid>
-  </form>
-</Grid>      */}
