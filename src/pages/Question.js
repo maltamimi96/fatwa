@@ -25,8 +25,9 @@ function Question() {
 
     function deleteQ(){
         const response = deleteQuestion(URL_PARAM.id)
-        response.then((response)=>{  console.log(response)})
+        response.then((response)=>{  setQuestion({})})
         .catch((err)=>{console.log(err)})
+
           
       
     }     
@@ -36,6 +37,7 @@ function Question() {
             <h2>{question.title}</h2>
             <p>{question.body}</p>
             <h6>{question.author}</h6>
+
         </div>
         <div className='edit-data'>
             <button onClick={deleteQ}>

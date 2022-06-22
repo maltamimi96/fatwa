@@ -2,6 +2,7 @@ import axios from "axios";
 const API = axios.create({
     baseURL:"http://127.0.0.1:3000"
 
+
 })
     API.interceptors.request.use((req)=>{
         const token= sessionStorage.token
@@ -12,4 +13,5 @@ const API = axios.create({
     })    
 
 
+    
 export default API

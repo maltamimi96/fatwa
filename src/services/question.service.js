@@ -1,10 +1,18 @@
 //crud
 import API from "../api/axios";
 
-export async function getAll(){
-    const ALL_QUESTIONS_URL = 'questions/all'
 
-    const response = await API.get(ALL_QUESTIONS_URL, 
+const QUESTIONS_URL=
+{
+    URL:"questions",
+    URL_ID:"questions/"
+
+}
+
+
+export async function getAll(){
+
+    const response = await API.get(QUESTIONS_URL.URL, 
     {
         headers: { 'Content-Type': 'application/json' },
     }
@@ -13,10 +21,10 @@ export async function getAll(){
 }
 
 
-export async function createQuestion(user_id,category_id,title,body){
-    const QUESTION_URL = `questions/ask`
+export async function createQuestion(user_id,category_id,title,body)
+{
     const data={user_id,category_id,title,body}
-    const response = await API.post(QUESTION_URL,data,
+    const response = await API.post(QUESTIONS_URL.URL,data,
         {
             headers: { 'Content-Type': 'application/json'},
         }
@@ -25,8 +33,7 @@ export async function createQuestion(user_id,category_id,title,body){
     }
 
 export async function getQuestion(id){
-        const QUESTION_URL = `questions/question/${id}`
-        const response = await API.get(QUESTION_URL, 
+        const response = await API.get(QUESTIONS_URL.URL_ID + id, 
             {
                 headers: { 'Content-Type': 'application/json' },
             }
@@ -35,8 +42,7 @@ export async function getQuestion(id){
 }
 
 export async function updateQuestion(id){
-        const QUESTION_URL = `questions/question/${id}`
-        const response = await API.get(QUESTION_URL, 
+        const response = await API.get(QUESTIONS_URL.URL_ID + id, 
             {
                 headers: { 'Content-Type': 'application/json', 
             },
@@ -47,8 +53,7 @@ export async function updateQuestion(id){
         
     
 export async function deleteQuestion(id){
-    const QUESTION_URL = `questions/delete/${id}`
-    const response = await API.delete(QUESTION_URL,
+    const response = await API.delete(QUESTIONS_URL.URL_ID + id,
         {
             headers: { 
                         'Content-Type': 'application/json'
