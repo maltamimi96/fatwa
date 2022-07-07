@@ -28,6 +28,15 @@ export async function sign_up (username,email,password,con_pass)  {
 }
 
 
+export async function isLoggedIn()
+{
+   return sessionStorage.getItem("token")||null 
+}
+
+export async function isAdmin()
+{
+  sessionStorage.getItem("admin")? console.log("yes"):console.log("no")
+}
 
 
 export async function logout ()  {

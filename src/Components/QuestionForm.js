@@ -2,12 +2,13 @@
 import AuthContext from "../context/AuthProvider";
 import { useRef, useState,useContext,useReducer } from 'react';
 import { createQuestion } from "../services/question.service";
+import { Box, Container } from "@mui/system";
+import { Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 
 const initialState={
   title:'',
   body:'',
-  category:'',
 }
 
 function reducer(state,action){
@@ -35,8 +36,6 @@ const [success, setSuccess] = useState(false);
 
 const handleSubmit = async (e) => {
   e.preventDefault()
-
-
       const response = createQuestion(auth.user_id,state.category,state.title,state.body)
       response.then((response)=>{
         setSuccess(true)
@@ -52,46 +51,80 @@ const handleSubmit = async (e) => {
         }) 
        
 }
-  return (
-    <div className='form-container'>
-      <form onSubmit={handleSubmit}>
-          <div className='form--input'>
-            <label htmlFor='title'>Title</label>
-            <input 
-            onChange={(e) => dispatch({type:"setTitle",payload:e.target.value})}
-            name="title"
-            type="text" 
-            required
-            >
-            </input>
-          
-          </div>
-        <div className='form--input'>
-          <label htmlFor='title'>Body</label>
-          <textarea 
-          name="body"
-          cols="100" 
-          rows="10"
-          onChange={(e) => dispatch({type:"setBody",payload:e.target.value})}
-          >
-          </textarea>
-        <div className='form--input'>
-        <label htmlFor='title'>Category</label>
-        <input 
-        name="category"
-        onChange={(e) => dispatch({type:"setCategory",payload:e.target.value})}
+const handleChange = (event) => {
+  dispatch({type:'setCategory',payload:event.target.value})  
+};
 
-        type="number" 
-        required
+
+  return (
+    <Container>
+      <Box sx={{
+        marginTop:4,
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center'
+      }}component="form" noValidate onSubmit={handleSubmit}>
+
+        <Grid container>
+          <Grid item xs={12} sx={{marginBottom:1}}>
+            <TextField 
+            label="Title"
+            name="title"
+            onChange={(e) => dispatch({type:"setTitle",payload:e.target.value})}
+            fullWidth
+            required
+            variant="filled"
+            >
+             
+            </TextField>
+            
+          </Grid>
+          <Grid item xs={12} sx={{marginBottom:1}}>
+            <TextField 
+              label="Body"
+              name="title"
+              onChange={(e) => dispatch({type:"setBody",payload:e.target.value})}
+              fullWidth
+              multiline  
+              minRows={20} 
+              required  
+              variant="filled"       
+            >
+             
+            </TextField>
+
+            
+          </Grid>
+          <Grid item xs={12} sx={{marginBottom:1}}>
+
+          <InputLabel>Category</InputLabel>
+        <Select
+          onChange={handleChange}
+          value={1}
+          label="fiqh"
         >
-        </input>
-        
-        </div>
-        </div>
-        <button>Submit Question</button>
-      </form>
-    </div>
+          <MenuItem value={1}>Fiqh</MenuItem>
+          <MenuItem value={2}>Tafseer</MenuItem>
+        </Select>
+          </Grid>
+          <Grid item xs={12}>
+          <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Submit Question
+            </Button>
+            
+          </Grid>
+        </Grid>
+
+      </Box>
+    </Container>
   )
 }
 
 export default QuestionForm
+
+

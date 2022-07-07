@@ -41,8 +41,8 @@ export async function getQuestion(id){
             return response.data
 }
 
-export async function updateQuestion(id){
-        const response = await API.get(QUESTIONS_URL.URL_ID + id, 
+export async function updateQuestion(id,data){
+        const response = await API.update(QUESTIONS_URL.URL_ID + id, 
             {
                 headers: { 'Content-Type': 'application/json', 
             },
@@ -61,7 +61,7 @@ export async function deleteQuestion(id){
         }
         )
         return response.data
-    }
+}
 
 
     

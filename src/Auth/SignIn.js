@@ -60,10 +60,14 @@ useEffect(() => {
         const jwt = response?.data?.jwt
         const username =response?.data.username
         const user_id =response?.data.id
+        const admin =response?.data.admin
+
         console.log(response)
         setAuth({jwt,username,user_id})
         sessionStorage.setItem("token",jwt)
         sessionStorage.setItem("user",username)
+        sessionStorage.setItem("admin",admin)
+
         setSuccess(true)
         }).catch ((err)=>{ if (!err?.response) {
             setErrMsg('No Server Response')

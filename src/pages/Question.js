@@ -27,9 +27,6 @@ function Question() {
         const response = deleteQuestion(URL_PARAM.id)
         response.then((response)=>{  setQuestion({})})
         .catch((err)=>{console.log(err)})
-
-          
-      
     }     
   return (
     <div>
